@@ -1,0 +1,21 @@
+# PCA eigen (numeric only)
+
+pc <- princomp(na.omit(proj$dataset[proj$sample, proj$numeric]), scale=TRUE, center=TRUE, tol=0)
+
+pc
+
+#Importance
+summary(pc)
+
+# Importance Plot 
+plot(pc, main="")
+title(main="Principal Components Importance data.csv",
+    sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+dev.new()
+
+# Biplot (2 most principal components plot)
+biplot(pc, main="")
+title(main="Principal Components data.csv",
+    sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+

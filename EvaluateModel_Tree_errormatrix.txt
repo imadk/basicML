@@ -1,0 +1,23 @@
+# Generate an Error Matrix 
+
+# Response from DT model
+proj$pr <- predict(proj$rpart, proj$dataset[proj$validate, c(proj$input, proj$target)], type="class")
+
+# Create confusion matrix
+table(proj$dataset[proj$validate, c(proj$input, proj$target)]$y, proj$pr,
+        dnn=c("Actual", "Predicted"))
+
+#  Create confusion matrix with percentages
+round(100*table(proj$dataset[proj$validate, c(proj$input, proj$target)]$y, proj$pr, 
+        dnn=c("Actual", "Predicted"))/length(proj$pr))
+
+# Calculate overall error percentage
+overall <- function(x)
+{
+  if (nrow(x) == 2) 
+    cat((x[1,2] + x[2,1]) / sum(x)) 
+  else
+    cat(1 - (x[1,rownames(x)]) / sum(x))
+} 
+overall(table(proj$pr, proj$dataset[proj$validate, c(proj$input, proj$target)]$y,  
+        dnn=c("Predicted", "Actual")))

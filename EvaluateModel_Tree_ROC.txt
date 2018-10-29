@@ -1,0 +1,39 @@
+# ROC Curve
+
+require(ROCR, quietly=TRUE)
+
+# Generate ROC Curve for the rpart model on the validation dataset
+
+proj$pr <- predict(proj$rpart, proj$dataset[proj$validate, c(proj$input, proj$target)])[,2]
+
+# Deal with any missing values in the target variable by 
+# ignoring any training data with missing target values.
+no.miss <- na.omit(proj$dataset[proj$validate, c(proj$input, proj$target)]$y)
+miss.list <- attr(no.miss, "na.action")
+attributes(no.miss) <- NULL
+if (length(miss.list)) {
+	pred <- prediction(proj$pr[-miss.list], no.miss)
+} else {
+	pred <- prediction(proj$pr, no.miss)
+}
+plot(performance(pred, "tpr", "fpr"), col="#CC0000FF", lty=1, add=FALSE)
+
+
+# Deal with any missing values in the target variable by 
+# ignoring any training data with missing target values.
+no.miss <- na.omit(proj$dataset[proj$validate, c(proj$input, proj$target)]$y)
+miss.list <- attr(no.miss, "na.action")
+attributes(no.miss) <- NULL
+if (length(miss.list)) {
+	pred <- prediction(proj$pr[-miss.list], no.miss)
+} else {
+	pred <- prediction(proj$pr, no.miss)
+}
+performance(pred, "auc")
+
+legend("bottomright", c("rpart"), col=rainbow(1, 1, .8), lty=1:1, title="Models", inset=c(0.05, 0.05))
+
+title(main="ROC Curve  data.csv [validate]",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+grid()
+

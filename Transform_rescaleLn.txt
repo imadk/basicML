@@ -1,0 +1,46 @@
+# Transform vars by rescaling using ln
+
+# Rescale X1
+proj$dataset[["RLG_X1"]] <- proj$dataset[["X1"]]
+
+# Take a log transform of the variable (-Inf becomes NA)
+if (building)
+{
+  proj$dataset[["RLG_X1"]] <-  log(proj$dataset[["X1"]]) 
+  proj$dataset[proj$dataset[["RLG_X1"]] == -Inf & ! is.na(proj$dataset[["RLG_X1"]]), "RLG_X1"] <- NA
+}
+
+# Use the training data parameters when scoring
+if (scoring)
+{
+  proj$dataset[["RLG_X1"]] <-  log(proj$dataset[["X1"]]) 
+  proj$dataset[proj$dataset[["RLG_X1"]] == -Inf & ! is.na(proj$dataset[["RLG_X1"]]), "RLG_X1"] <- NA
+}
+
+# Rescale X2
+proj$dataset[["RLG_X2"]] <- proj$dataset[["X2"]]
+
+# Take a log transform of the variable (-Inf becomes NA)
+if (building)
+{
+  proj$dataset[["RLG_X2"]] <-  log(proj$dataset[["X2"]]) 
+  proj$dataset[proj$dataset[["RLG_X2"]] == -Inf & ! is.na(proj$dataset[["RLG_X2"]]), "RLG_X2"] <- NA
+}
+
+# Use the training data parameters when scoring
+if (scoring)
+{
+  proj$dataset[["RLG_X2"]] <-  log(proj$dataset[["X2"]]) 
+  proj$dataset[proj$dataset[["RLG_X2"]] == -Inf & ! is.na(proj$dataset[["RLG_X2"]]), "RLG_X2"] <- NA
+}
+
+
+proj$input <- c("RLG_X1", "RLG_X2")
+proj$numeric <- c("RLG_X1", "RLG_X2")
+proj$categoric <- NULL
+proj$target  <- "y"
+proj$risk    <- NULL
+proj$ident   <- NULL
+proj$ignore  <- c("X1", "X2")
+proj$weights <- NULL
+

@@ -1,0 +1,18 @@
+require(Hmisc, quietly=TRUE)
+require(Hmisc, quietly=TRUE)
+require(fBasics, quietly=TRUE)
+require(mice, quietly=TRUE)
+
+# Summary
+contents(proj$dataset[proj$sample, c(proj$input, proj$risk, proj$target)])
+summary(proj$dataset[proj$sample, c(proj$input, proj$risk, proj$target)])
+
+# Describe dataset
+describe(proj$dataset[proj$sample, c(proj$input, proj$risk, proj$target)])
+
+# Describe numeric data
+lapply(proj$dataset[proj$sample, c(proj$input, proj$risk, proj$target)][,c(1:3)], basicStats)
+
+# Summary of missing values in dataset
+md.pattern(proj$dataset[,c(proj$input, proj$target)])
+

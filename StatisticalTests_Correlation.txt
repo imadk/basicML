@@ -1,0 +1,5 @@
+#Correlation test
+
+require(fBasics, quietly=TRUE)
+correlationTest(na.omit(proj$dataset[, "X1"]), na.omit(proj$dataset[, "X2"]))
+

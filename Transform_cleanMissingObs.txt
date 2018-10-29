@@ -1,0 +1,6 @@
+# Remove the rows with missing values
+
+proj$dataset <- proj$dataset[complete.cases(proj$dataset[,-c(1:2)]),]
+
+#Update dataset variables
+#THIS MUST BE PERFORMED 

@@ -1,0 +1,41 @@
+# Perform missing value imputation by replacing by zero/missing
+
+# Impute X1
+proj$dataset[["IZR_X1"]] <- proj$dataset[["X1"]]
+
+# Change all NAs to 0
+if (building)
+{
+  proj$dataset[["IZR_X1"]][is.na(proj$dataset[["X1"]])] <- 0
+}
+
+# Use the training data parameters when scoring
+if (scoring)
+{
+  proj$dataset[["IZR_X1"]][is.na(proj$dataset[["X1"]])] <- 0
+}
+
+# Impute X2
+proj$dataset[["IZR_X2"]] <- proj$dataset[["X2"]]
+
+# Change all NAs to 0
+if (building)
+{
+  proj$dataset[["IZR_X2"]][is.na(proj$dataset[["X2"]])] <- 0
+}
+
+#Use the training data parameters
+if (scoring)
+{
+  proj$dataset[["IZR_X2"]][is.na(proj$dataset[["X2"]])] <- 0
+}
+
+# Update dataset vars
+proj$input <- c("IZR_X1", "IZR_X2")
+proj$numeric <- c("IZR_X1", "IZR_X2")
+proj$categoric <- NULL
+proj$target  <- "y"
+proj$risk    <- NULL
+proj$ident   <- NULL
+proj$ignore  <- c("X1", "X2")
+proj$weights <- NULL

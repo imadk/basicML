@@ -1,0 +1,38 @@
+set.seed(48)
+
+# Generate a kmeans cluster of size 10
+proj$kmeans <- kmeans(na.omit(proj$dataset[proj$sample, proj$numeric]), 10)
+
+# Cluster sizes
+paste(proj$kmeans$size, collapse=' ')
+
+# Data means
+colMeans(na.omit(proj$dataset[proj$sample, proj$numeric]))
+
+# Cluster centers
+proj$kmeans$centers
+
+# Within cluster sum of squares
+proj$kmeans$withinss
+
+
+
+# Generate stats for the clustering
+
+require(fpc, quietly=TRUE)
+cluster.stats(dist(na.omit(proj$dataset[proj$sample, proj$numeric])), proj$kmeans$cluster)
+
+
+# Scatterplot matrix for the KMeans clustering
+# Data plot
+plot(na.omit(proj$dataset[proj$sample, intersect(proj$input, proj$numeric)]), col=proj$kmeans$cluster)
+title(main="",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+dev.new()
+
+# Discriminant coordinates plot
+plotcluster(na.omit(proj$dataset[proj$sample, intersect(proj$input, proj$numeric)]), proj$kmeans$cluster)
+title(main="Discriminant Coordinates data.csv",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+

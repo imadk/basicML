@@ -1,0 +1,40 @@
+# Hierarchical Clustering
+
+require(amap, quietly=TRUE)
+require(cba, quietly=TRUE)
+require(fpc, quietly=TRUE)
+
+proj$hclust <- hclusterpar(na.omit(proj$dataset[proj$sample, proj$numeric]), 
+    method="euclidean", link="ward", nbproc=1)
+
+#Dendrogram plot
+
+plot(proj$hclust, main="", sub="", xlab="")
+title(main="Cluster Dendrogram data.csv",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+rect.hclust(proj$hclust, k=10)
+
+dev.new()
+
+# Data plot
+plot(proj$dataset[proj$sample, c(1:2)], col=cutree(proj$hclust, 10))
+ title(main="",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+dev.new()
+
+# Discriminant coordinates plot
+plotcluster(na.omit(proj$dataset[proj$sample, c(1:2)]),  cutree(proj$hclust, 10))
+title(main="Discriminant Coordinates data.csv",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+
+# Cluster centers for each cluster
+centers.hclust(na.omit(proj$dataset[proj$sample, proj$numeric]), proj$hclust, 10)
+
+# Generate clustering statistics 
+cluster.stats(dist(na.omit(proj$dataset[proj$sample, proj$numeric])), cutree(proj$hclust, 10))
+
+
+

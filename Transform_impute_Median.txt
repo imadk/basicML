@@ -1,0 +1,41 @@
+# Perform imputation on missing values
+
+# Impute X1
+proj$dataset[["IMD_X1"]] <- proj$dataset[["X1"]]
+
+# Change all NAs to the median (not advisable)
+if (building)
+{
+  proj$dataset[["IMD_X1"]][is.na(proj$dataset[["X1"]])] <- median(proj$dataset[["X1"]], na.rm=TRUE)
+}
+
+# Use the training data parameters when scoring
+if (scoring)
+{
+  proj$dataset[["IMD_X1"]][is.na(proj$dataset[["X1"]])] <- 2.83269934429793
+}
+
+# Impute X2
+proj$dataset[["IMD_X2"]] <- proj$dataset[["X2"]]
+
+# Change all NAs to the median (not advisable)
+if (building)
+{
+  proj$dataset[["IMD_X2"]][is.na(proj$dataset[["X2"]])] <- median(proj$dataset[["X2"]], na.rm=TRUE)
+}
+
+# Use the training data parameters when scoring
+if (scoring)
+{
+  proj$dataset[["IMD_X2"]][is.na(proj$dataset[["X2"]])] <- 2.80522730753891
+}
+
+# Update dataset variables
+proj$input <- c("IMD_X1", "IMD_X2")
+proj$numeric <- c("IMD_X1", "IMD_X2")
+proj$categoric <- NULL
+proj$target  <- "y"
+proj$risk    <- NULL
+proj$ident   <- NULL
+proj$ignore  <- c("X1", "X2")
+proj$weights <- NULL

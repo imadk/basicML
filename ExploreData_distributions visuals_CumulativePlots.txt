@@ -1,0 +1,57 @@
+require(ggplot2, quietly=TRUE)
+require(Hmisc, quietly=TRUE)
+require(gplots, quietly=TRUE)
+
+
+# Cumulative plot for variable 'X1'
+ds <- rbind(data.frame(dat=proj$dataset[proj$sample,][,"X1"], grp="All"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="-1","X1"], grp="-1"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="1","X1"], grp="1"))
+
+Ecdf(ds[ds$grp=="All",1], col="#E495A5", xlab="X1", lwd=2, ylab=expression(Proportion <= x), subtitles=FALSE)
+Ecdf(ds[ds$grp=="-1",1], col="#86B875", lty=2, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
+Ecdf(ds[ds$grp=="1",1], col="#7DB0DD", lty=3, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
+
+legend("bottomright", c("All","-1","1"), bty="n",  col=rainbow_hcl(3) , lwd=2, lty=1:3, inset=c(0.05,0.05))
+
+title(main="Distribution of X1 (sample)
+by y",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+dev.new()
+
+
+# Cumulative plot for variable 'X2'
+ds <- rbind(data.frame(dat=proj$dataset[proj$sample,][,"X2"], grp="All"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="-1","X2"], grp="-1"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="1","X2"], grp="1"))
+
+Ecdf(ds[ds$grp=="All",1], col="#E495A5", xlab="X2", lwd=2, ylab=expression(Proportion <= x), subtitles=FALSE)
+Ecdf(ds[ds$grp=="-1",1], col="#86B875", lty=2, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
+Ecdf(ds[ds$grp=="1",1], col="#7DB0DD", lty=3, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
+
+legend("bottomright", c("All","-1","1"), bty="n",  col=rainbow_hcl(3) , lwd=2, lty=1:3, inset=c(0.05,0.05))
+
+title(main="Distribution of X2 (sample)
+by y",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+
+dev.new()
+
+# Cumulative plot for variable 'y'
+ds <- rbind(data.frame(dat=proj$dataset[proj$sample,][,"y"], grp="All"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="-1","y"], grp="-1"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="1","y"], grp="1"))
+
+Ecdf(ds[ds$grp=="All",1], col="#E495A5", xlab="y", lwd=2, ylab=expression(Proportion <= x), subtitles=FALSE)
+Ecdf(ds[ds$grp=="-1",1], col="#86B875", lty=2, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
+Ecdf(ds[ds$grp=="1",1], col="#7DB0DD", lty=3, xlab="", lwd=2, subtitles=FALSE, add=TRUE)
+
+legend("bottomright", c("All","-1","1"), bty="n",  col=rainbow_hcl(3) , lwd=2, lty=1:3, inset=c(0.05,0.05))
+
+title(main="Distribution of y (sample)
+by y",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+

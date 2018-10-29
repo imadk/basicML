@@ -1,0 +1,20 @@
+# Neural Network 
+
+require(nnet, quietly=TRUE)
+
+set.seed(199)
+proj$nnet <- nnet(as.factor(y) ~ .,
+    data=proj$dataset[proj$sample,c(proj$input, proj$target)],
+    size=10, skip=TRUE, MaxNWts=10000, trace=FALSE, maxit=100)
+
+# Print the results 
+
+cat(sprintf("A %s network with %d weights.\n",
+    paste(proj$nnet$n, collapse="-"),
+    length(proj$nnet$wts)))
+cat(sprintf("Inputs: %s.\n",
+    paste(proj$nnet$coefnames, collapse=", ")))
+cat(sprintf("Output: %s.\n",
+    names(attr(proj$nnet$terms, "dataClasses"))[1]))
+cat(sprintf("Sum of Squares Residuals: %.4f.\n",
+    sum(residuals(proj$nnet) ^ 2)))

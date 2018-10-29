@@ -1,0 +1,17 @@
+require(ellipse, quietly=TRUE)
+
+# Correlation plot (numeric vars only)
+proj$cor <- cor(proj$dataset[proj$sample, proj$numeric], use="pairwise", method="pearson")
+
+# Order correlations by strength
+proj$ord <- order(proj$cor[1,])
+proj$cor <- proj$cor[proj$ord, proj$ord]
+
+#Show the correlations
+print(proj$cor)
+
+#Plot
+plotcorr(proj$cor, col=colorRampPalette(c("red", "white", "blue"))(11)[5*proj$cor + 6])
+title(main="Correlation data.csv using Pearson",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+

@@ -1,0 +1,15 @@
+# Hierarchical Variable Correlation (numeric only)
+
+cc <- cor(proj$dataset[proj$sample, proj$numeric], use="pairwise", method="pearson")
+hc <- hclust(dist(cc), method="average")
+dn <- as.dendrogram(hc)
+
+# Plot dendrogram.
+
+op <- par(mar = c(3, 4, 3, 1.14))
+plot(dn, horiz = TRUE, nodePar = list(col = 3:2, cex = c(2.0, 0.75), pch = 21:22, bg=  c("light blue", "pink"), lab.cex = 0.75, lab.col = "tomato"), edgePar = list(col = "gray", lwd = 2), xlab="Height")
+title(main="Variable Correlation Clusters
+ data.csv using Pearson",
+    sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+par(op)
+

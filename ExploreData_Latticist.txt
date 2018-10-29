@@ -1,0 +1,4 @@
+# Explore Data Through Latticist
+
+require(latticist)
+latticist(proj$dataset[proj$sample, c(proj$input, proj$risk, proj$target)], spec=list(groups = "y"))

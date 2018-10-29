@@ -1,0 +1,102 @@
+require(ggplot2, quietly=TRUE)
+require(Hmisc, quietly=TRUE)
+require(gplots, quietly=TRUE)
+
+
+# Benford's Law 
+# Distribution 
+expect <- unlist(lapply(1:9, function(x) log10(1 + 1/x)))
+
+# Plot for variable 'X1'
+ds <- rbind(data.frame(dat=proj$dataset[proj$sample,][,"X1"], grp="All"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="-1","X1"], grp="-1"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="1","X1"], grp="1"))
+
+# For legend
+sizes <- (function(x)(paste(names(x), " (",  x, ")", sep="")))(by(ds, ds$grp, nrow))
+
+# Frequency of first digits
+ds <- t(as.matrix(data.frame(expect=expect,
+     All=calcInitialDigitDistr(ds[ds$grp=="All", 1] , split="none", digit=1 ),
+     "-1"=calcInitialDigitDistr(ds[ds$grp=="-1", 1], split="none", digit=1),
+     "1"=calcInitialDigitDistr(ds[ds$grp=="1", 1], split="none", digit=1))))
+
+# Make sure rows with no digits treated as 0s
+ds[is.nan(ds)] <- 0
+
+# Show plot
+plot(1:9, ds[1,], type="b", pch=19, col="black", ylim=c(0,max(ds)), axes=FALSE, xlab="Distribution of the First Digit", ylab="Probability")
+axis(1, at=1:9)
+axis(2)
+points(1:9, ds[2,], col=rainbow_hcl(3)[1], pch=19, type="b")
+points(1:9, ds[3,], col=rainbow_hcl(3)[2], pch=19, type="b")
+points(1:9, ds[4,], col=rainbow_hcl(3)[3], pch=19, type="b")
+
+legend("topright", c("Benford's", sizes), inset=.05, bty="n", fill=c("black", rainbow_hcl(3)))
+
+title(main="Benford's Law: X1 (sample)
+by y",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+dev.new()
+
+# Plot for variable 'X2'
+ds <- rbind(data.frame(dat=proj$dataset[proj$sample,][,"X2"], grp="All"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="-1","X2"], grp="-1"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="1","X2"], grp="1"))
+
+sizes <- (function(x)(paste(names(x), " (",  x, ")", sep="")))(by(ds, ds$grp, nrow))
+
+ds <- t(as.matrix(data.frame(expect=expect,
+     All=calcInitialDigitDistr(ds[ds$grp=="All", 1] , split="none", digit=1 ),
+     "-1"=calcInitialDigitDistr(ds[ds$grp=="-1", 1], split="none", digit=1),
+     "1"=calcInitialDigitDistr(ds[ds$grp=="1", 1], split="none", digit=1))))
+
+ds[is.nan(ds)] <- 0
+
+# Show plot
+plot(1:9, ds[1,], type="b", pch=19, col="black", ylim=c(0,max(ds)), axes=FALSE, xlab="Distribution of the First Digit", ylab="Probability")
+axis(1, at=1:9)
+axis(2)
+points(1:9, ds[2,], col=rainbow_hcl(3)[1], pch=19, type="b")
+points(1:9, ds[3,], col=rainbow_hcl(3)[2], pch=19, type="b")
+points(1:9, ds[4,], col=rainbow_hcl(3)[3], pch=19, type="b")
+
+legend("topright", c("Benford's", sizes), inset=.05, bty="n", fill=c("black", rainbow_hcl(3)))
+
+title(main="Benford's Law: X2 (sample)
+by y",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+dev.new()
+
+
+# Plot of variable 'y'
+
+ds <- rbind(data.frame(dat=proj$dataset[proj$sample,][,"y"], grp="All"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="-1","y"], grp="-1"),
+            data.frame(dat=proj$dataset[proj$sample,][proj$dataset[proj$sample,]$y=="1","y"], grp="1"))
+
+sizes <- (function(x)(paste(names(x), " (",  x, ")", sep="")))(by(ds, ds$grp, nrow))
+
+ds <- t(as.matrix(data.frame(expect=expect,
+     All=calcInitialDigitDistr(ds[ds$grp=="All", 1] , split="none", digit=1 ),
+     "-1"=calcInitialDigitDistr(ds[ds$grp=="-1", 1], split="none", digit=1),
+     "1"=calcInitialDigitDistr(ds[ds$grp=="1", 1], split="none", digit=1))))
+
+ds[is.nan(ds)] <- 0
+
+# Show plot
+plot(1:9, ds[1,], type="b", pch=19, col="black", ylim=c(0,max(ds)), axes=FALSE, xlab="Distribution of the First Digit", ylab="Probability")
+axis(1, at=1:9)
+axis(2)
+points(1:9, ds[2,], col=rainbow_hcl(3)[1], pch=19, type="b")
+points(1:9, ds[3,], col=rainbow_hcl(3)[2], pch=19, type="b")
+points(1:9, ds[4,], col=rainbow_hcl(3)[3], pch=19, type="b")
+
+legend("topright", c("Benford's", sizes), inset=.05, bty="n", fill=c("black", rainbow_hcl(3)))
+
+title(main="Benford's Law: y (sample)
+by y",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+

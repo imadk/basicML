@@ -1,0 +1,10 @@
+#Kolmogorov-Smirnov test
+
+require(fBasics, quietly=TRUE)
+
+#X1 grouped by target (y)
+ks2Test(na.omit(proj$dataset[proj$dataset[["y"]] == "-1", "X1"]), na.omit(proj$dataset[proj$dataset[["y"]] == "1", "X1"]))
+
+#X1 and X2
+ks2Test(na.omit(proj$dataset[, "X1"]), na.omit(proj$dataset[, "X2"]))
+

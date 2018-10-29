@@ -1,0 +1,44 @@
+#Predicted vs Observed plot for rpart model on validation dataset
+proj$pr <- predict(proj$rpart, proj$dataset[proj$validate, c(proj$input, proj$target)])
+
+# Obtain the observed output 
+obs <- subset(proj$dataset[proj$validate,], select=proj$target)
+
+# Handle in case categoric target treated as numeric
+obs.rownames <- rownames(obs)
+obs <- as.numeric(obs[[1]])
+obs <- data.frame(y=obs)
+rownames(obs) <- obs.rownames
+
+# Combine the observed values with the predicted
+fitpoints <- na.omit(cbind(obs, Predicted=proj$pr))
+
+# Obtain the pseudo R2 - a correlation
+fitcorr <- format(cor(fitpoints[,1], fitpoints[,2]), digits=4)
+
+# Plot settings for the true points and best fit
+op <- par(c(lty="solid", col="blue"))
+
+# Display the observed (X) versus predicted (Y) points
+plot(jitter(fitpoints[[1]]), fitpoints[[2]], asp=1, xlab="y (Jittered)", ylab="Predicted")
+
+# Generate a simple linear fit between predicted and observed
+prline <- lm(fitpoints[,2] ~ fitpoints[,1])
+
+# Add the linear fit to the plot
+abline(prline)
+
+# Add a diagonal representing perfect correlation
+par(c(lty="dashed", col="black"))
+abline(0, 1)
+
+# Include a pseudo R-square on the plot
+legend("bottomright",  sprintf(" Pseudo R-square=%s ", fitcorr),  bty="n")
+
+# Add a title and grid to the plot
+title(main="Predicted vs. Observed
+ Decision Tree Model
+ data.csv [validate]",
+    sub=paste("", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+grid()
+

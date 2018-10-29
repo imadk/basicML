@@ -1,0 +1,35 @@
+library(RGtk2Extras)
+library(RGtk2)
+library(colorspace)
+building <- TRUE
+scoring  <- ! building
+
+proj<-NULL
+crv<-NULL
+
+# Random seed so that results are repeatable
+crv$seed <- 56 
+
+# Load data
+proj$dataset <- read.csv("file:///C:/Users/Imad/Documents/CKI/CKI Inc/workspaces/iPerceptions2_workspace/Code/workspace/Dataset Prediction Project 1/!Dataset/StarWars.csv", na.strings=c(".", "NA", "", "?"), strip.white=TRUE)
+
+# Build training/validation/test data sets
+set.seed(crv$seed) 
+proj$nobs <- nrow(proj$dataset) 
+proj$sample <- proj$train <- sample(nrow(proj$dataset), 0.7*proj$nobs) 
+proj$validate <- sample(setdiff(seq_len(nrow(proj$dataset)), proj$train), 0.15*proj$nobs) 
+proj$test <- setdiff(setdiff(seq_len(nrow(proj$dataset)), proj$train), proj$validate) 
+
+# Define the input and targets and params
+proj$input <- c("X1", "X2")
+proj$numeric <- c("X1", "X2")
+proj$categoric <- NULL
+proj$target  <- "y"
+proj$risk    <- NULL
+proj$ident   <- NULL
+proj$ignore  <- NULL
+proj$weights <- NULL
+
+# View the dataset 
+dfedit(proj$dataset, dataset.name="Dataset", size=c(800, 400))
+

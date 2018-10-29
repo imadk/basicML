@@ -1,0 +1,6 @@
+#t-Test
+
+require(fBasics, quietly=TRUE)
+
+locationTest(na.omit(proj$dataset[proj$dataset[["y"]] == "-1", "X1"]), na.omit(proj$dataset[proj$dataset[["y"]] == "1", "X1"]))
+locationTest(na.omit(proj$dataset[, "X1"]), na.omit(proj$dataset[, "X2"]))

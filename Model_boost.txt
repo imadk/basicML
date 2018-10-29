@@ -1,0 +1,36 @@
+# Ada Boost 
+
+require(ada, quietly=TRUE)
+
+set.seed(crv$seed)
+proj$ada <- ada(y ~ .,
+      data=proj$dataset[proj$train,c(proj$input, proj$target)],
+      control=rpart.control(maxdepth=30,
+           cp=0.010000,
+           minsplit=20,
+           xval=10),
+      iter=50)
+
+
+# Results
+print(proj$ada)
+round(proj$ada$model$errs[proj$ada$iter,], 2)
+cat('Variables actually used in tree construction:\n')
+print(sort(names(listAdaVarsUsed(proj$ada))))
+cat('\nFrequency of variables actually used:\n')
+print(listAdaVarsUsed(proj$ada))
+
+
+# Plot the relative importance of the variables
+varplot(proj$ada)
+
+dev.new()
+
+# Plot the relative importance of the variables
+varplot(proj$ada)
+
+dev.new()
+
+# Plot the error rate as we increase the number of trees.
+plot(proj$ada)
+

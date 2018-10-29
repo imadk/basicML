@@ -1,0 +1,88 @@
+require(ggplot2, quietly=TRUE)
+require(Hmisc, quietly=TRUE)
+require(gplots, quietly=TRUE)
+
+# Box plots
+
+# Box Plot for X1
+pp <- with(crs,
+           ggplot(dataset[sample,]) + 
+           geom_boxplot(aes("All", X1), notch=TRUE) + 
+           geom_boxplot(aes(y, X1), notch=TRUE) + 
+           xlab("y\n\n 2013-Mar-20 07:14:24 Imad") + 
+           ggtitle("Distribution of X1 (sample)
+by y") + 
+           theme(legend.position="none")
+          )
+print(pp)
+dev.new()
+
+# Box Plot for X2
+pp <- with(crs,
+           ggplot(dataset[sample,]) + 
+           geom_boxplot(aes("All", X2), notch=TRUE) + 
+           geom_boxplot(aes(y, X2), notch=TRUE) + 
+           xlab("y\n\n 2013-Mar-20 07:14:25 Imad") + 
+           ggtitle("Distribution of X2 (sample)
+by y") + 
+           theme(legend.position="none")
+          )
+print(pp)
+dev.new()
+
+# Box Plot for y
+pp <- with(crs,
+           ggplot(dataset[sample,]) + 
+           geom_boxplot(aes("All", y), notch=TRUE) + 
+           geom_boxplot(aes(y, y), notch=TRUE) + 
+           xlab("y\n\n 2013-Mar-20 07:14:25 Imad") + 
+           ggtitle("Distribution of y (sample)
+by y") + 
+           theme(legend.position="none")
+          )
+print(pp)
+require(ggplot2, quietly=TRUE)
+require(Hmisc, quietly=TRUE)
+require(gplots, quietly=TRUE)
+
+# Box plots
+
+# Box Plot for X1
+pp <- with(crs,
+           ggplot(dataset[sample,]) + 
+           geom_boxplot(aes("All", X1), notch=TRUE) + 
+           geom_boxplot(aes(y, X1), notch=TRUE) + 
+           xlab("y\n\n 2013-Mar-20 07:14:24 Imad") + 
+           ggtitle("Distribution of X1 (sample)
+by y") + 
+           theme(legend.position="none")
+          )
+print(pp)
+dev.new()
+
+# Box Plot for X2
+pp <- with(crs,
+           ggplot(dataset[sample,]) + 
+           geom_boxplot(aes("All", X2), notch=TRUE) + 
+           geom_boxplot(aes(y, X2), notch=TRUE) + 
+           xlab("y\n\n 2013-Mar-20 07:14:25 Imad") + 
+           ggtitle("Distribution of X2 (sample)
+by y") + 
+           theme(legend.position="none")
+          )
+print(pp)
+dev.new()
+
+# Box Plot for y
+pp <- with(crs,
+           ggplot(dataset[sample,]) + 
+           geom_boxplot(aes("All", y), notch=TRUE) + 
+           geom_boxplot(aes(y, y), notch=TRUE) + 
+           xlab("y\n\n 2013-Mar-20 07:14:25 Imad") + 
+           ggtitle("Distribution of y (sample)
+by y") + 
+           theme(legend.position="none")
+          )
+print(pp)
+
+

@@ -1,0 +1,44 @@
+#Transform by normalizing between 0 and 1
+
+require(reshape, quietly=TRUE)
+
+# Rescale X1
+proj$dataset[["R01_X1"]] <- proj$dataset[["X1"]]
+
+# Rescale to [0,1]
+if (building)
+{
+  proj$dataset[["R01_X1"]] <-  rescaler(proj$dataset[["X1"]], "range")
+}
+
+# Use the training data parameters when scoring
+if (scoring)
+{
+  proj$dataset[["R01_X1"]] <- (proj$dataset[["X1"]] - 0.009244)/abs(5.552516 - 0.009244)
+}
+
+# Rescale X2
+proj$dataset[["R01_X2"]] <- proj$dataset[["X2"]]
+
+# Rescale to [0,1]
+if (building)
+{
+  proj$dataset[["R01_X2"]] <-  rescaler(proj$dataset[["X2"]], "range")
+}
+
+# User the training data parameters when scoring
+if (scoring)
+{
+  proj$dataset[["R01_X2"]] <- (proj$dataset[["X2"]] - 0.163431)/abs(5.227117 - 0.163431)
+}
+
+# Update the dataset variables
+
+proj$input <- c("R01_X1", "R01_X2")
+proj$numeric <- c("R01_X1", "R01_X2")
+proj$categoric <- NULL
+proj$target  <- "y"
+proj$risk    <- NULL
+proj$ident   <- NULL
+proj$ignore  <- c("X1", "X2")
+proj$weights <- NULL
